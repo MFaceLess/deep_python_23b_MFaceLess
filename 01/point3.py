@@ -89,6 +89,26 @@ class TestSomeModel(unittest.TestCase):
             ]
             self.assertEqual(expected_calls, mock_fetch.mock_calls)
 
+    # Тесты на граничные значения: return_value == good трешхолду или bad
+    # трешхолду (добавлено)
+    def test_predict_message_mood_bad_thresh(self):
+        model = point1.SomeModel()
+        with mock.patch('point1.SomeModel.predict') as mock_fetch:
+            mock_fetch.return_value = 0.3
+            self.assertEqual(
+                'норм', point1.predict_message_mood(
+                    'call_1', model, 0.3, 0.8))
+            mock_fetch.return_value = 0.8
+            self.assertEqual(
+                'норм', point1.predict_message_mood(
+                    'call_2', model, 0.3, 0.8))
+            expected_calls = [
+                mock.call('call_1'),
+                mock.call('call_2')
+            ]
+            self.assertEqual(expected_calls, mock_fetch.mock_calls)
+    # -----------------------------------------------------------------------------------------
+
     def test_file_read_filter_gen(self):
         file_content = """а Роза упала на лапу Азора1\n
 а эта строчка уже не подходит\n
@@ -139,10 +159,12 @@ class TestSomeModel(unittest.TestCase):
                         new=unittest.mock.mock_open(read_data=file_content),
                         create=True) as file_mock:
             file_mock.side_effect = OSError
-            with self.assertRaises(OSError) as _:
+            with self.assertRaises(OSError) as err:
                 result = point2.file_read_filter_gen(
                     'test_file.txt', ['а Роза'])
                 next(result)
+            self.assertEqual("Ошибка при работе с файлом", str(err.exception))
+            self.assertEqual(OSError, type(err.exception))
 
     def test_file_read_filter_gen_empty(self):
         file_content = ""
@@ -171,6 +193,21 @@ class TestSomeModel(unittest.TestCase):
             result = point2.file_read_filter_gen(file_, [])
             with self.assertRaises(StopIteration) as _:
                 next(result)
+
+    # тест на случай если искомое слово == всей строке целиком (добавлено)
+    def test_file_read_word_sentence(self):
+        file_content = """а Роза упала на лапу Азора1\n
+а Роза упала на лапу Азора1\n
+а Роза упала на лапу Азора1\n"""
+        with mock.patch(
+            'builtins.open',
+            new=unittest.mock.mock_open(read_data=file_content),
+                create=True) as _:
+            result = point2.file_read_filter_gen(
+                'test_file.txt', ['а Роза упала на лапу Азора1'])
+            with self.assertRaises(StopIteration) as _:
+                next(result)
+    # -----------------------------------------------------------------------
 
 
 if __name__ == '__main__':
