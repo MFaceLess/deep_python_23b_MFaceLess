@@ -55,10 +55,10 @@ class TestModels(unittest.TestCase):
             required_fields = ["key1", "key2", "key5"]
             keywords = ["word2", "word3"]
             expected_call = [
-                mock.call('word2'),
-                mock.call('word2'),
-                mock.call('word3'),
-                mock.call('word3'),
+                mock.call('key1', 'word2'),
+                mock.call('key2', 'word2'),
+                mock.call('key2', 'word3'),
+                mock.call('key5', 'word3'),
             ]
             self.assertEqual(
                 None,
@@ -77,8 +77,8 @@ class TestModels(unittest.TestCase):
             required_fields = ["key1", "key5"]
             keywords = ["word2", "word3"]
             expected_call = [
-                mock.call('word2'),
-                mock.call('word3'),
+                mock.call('key1', 'word2'),
+                mock.call('key5', 'word3'),
             ]
             self.assertEqual(
                 None,
@@ -97,9 +97,9 @@ class TestModels(unittest.TestCase):
             required_fields = ["key1", "key2", "key5"]
             keywords = ["word1", "word3"]
             expected_call = [
-                mock.call('Word1'),
-                mock.call('Word3'),
-                mock.call('word3'),
+                mock.call('key1', 'Word1'),
+                mock.call('key2', 'Word3'),
+                mock.call('key5', 'word3'),
             ]
             self.assertEqual(
                 None,
@@ -117,9 +117,7 @@ class TestModels(unittest.TestCase):
             "key5": "word3 word5"}'
             required_fields = ["key1", "key2", "key5"]
             keywords = ["word1 word2"]
-            expected_call = [
-                mock.call('Word1 word2'),
-            ]
+            expected_call = []
             self.assertEqual(
                 None,
                 parser_json.parse_json(
@@ -128,7 +126,7 @@ class TestModels(unittest.TestCase):
                     keywords,
                     parser_json.keyword_callback))
             self.assertEqual(expected_call, mock_fetch.mock_calls)
-            self.assertEqual(1, mock_fetch.call_count)
+            self.assertEqual(0, mock_fetch.call_count)
 
     def test_parse_json_edge_empty_sentences1(self):
         with mock.patch('parser_json.keyword_callback') as mock_fetch:
@@ -137,7 +135,7 @@ class TestModels(unittest.TestCase):
             required_fields = ["key1", "key2", "key5"]
             keywords = [""]
             expected_call = [
-                mock.call(""),
+                mock.call('key1', ""),
             ]
             self.assertEqual(
                 None,
@@ -173,9 +171,9 @@ class TestModels(unittest.TestCase):
             required_fields = ["key1", "key2", "key5"]
             keywords = [""]
             expected_call = [
-                mock.call(""),
-                mock.call(""),
-                mock.call(""),
+                mock.call('key1', ""),
+                mock.call('key2', ""),
+                mock.call('key5', ""),
             ]
             self.assertEqual(
                 None,
