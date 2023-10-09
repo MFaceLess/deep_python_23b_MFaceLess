@@ -118,13 +118,7 @@ class TestSomeModel(unittest.TestCase):
             result = file_read_filter_gen.file_read_filter_gen(
                 'test_file.txt', ['роза', 'упала', 'лапу'])
             self.assertEqual(next(result), 'а Роза упала на лапу Азора1\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора1\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора1\n')
             self.assertEqual(next(result), 'а Роза упала на лапу Азора2\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора2\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора2\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора3\n')
-            self.assertEqual(next(result), 'а Роза упала на лапу Азора3\n')
             self.assertEqual(next(result), 'а Роза упала на лапу Азора3\n')
             with self.assertRaises(StopIteration) as _:
                 next(result)

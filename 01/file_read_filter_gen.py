@@ -15,6 +15,7 @@ def file_read_filter_gen(file: str | io.TextIOWrapper, need_words: list[str]):
                 for word in need_words:
                     if word.lower() in words_list:
                         yield line
+                        break
         if isinstance(file, str):
             file_descriptor.close()
     except OSError as oserror:
