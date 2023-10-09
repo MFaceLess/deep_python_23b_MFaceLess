@@ -18,46 +18,41 @@ class CustomList(list):
         return CustomList(res)
 
     def __init__(self, init_lst):
-        super().__init__()
-        self.lst = init_lst.copy()
+        super().__init__(init_lst)
 
     def __add__(self, other):
-        if isinstance(other, CustomList):
-            return self.sum_two_list(self.lst, other.lst)
-        if isinstance(other, list):
-            return self.sum_two_list(self.lst, other)
-        raise TypeError("Неподходящий тип")
+        if not isinstance(other, (CustomList, list)):
+            raise TypeError("Неподходящий тип")
+        return self.sum_two_list(self, other)
 
     def __sub__(self, other):
-        if isinstance(other, CustomList):
-            return self.sub_two_list(self.lst, other.lst)
-        if isinstance(other, list):
-            return self.sub_two_list(self.lst, other)
-        raise TypeError("Неподходящий тип")
+        if not isinstance(other, (CustomList, list)):
+            raise TypeError("Неподходящий тип")
+        return self.sub_two_list(self, other)
 
     def __radd__(self, other):
-        return self.sum_two_list(other, self.lst)
+        return self.sum_two_list(other, self)
 
     def __rsub__(self, other):
-        return self.sub_two_list(other, self.lst)
+        return self.sub_two_list(other, self)
 
     def __eq__(self, other):
-        return sum(self.lst) == sum(other.lst)
+        return sum(self) == sum(other)
 
     def __ne__(self, other):
-        return sum(self.lst) != sum(other.lst)
+        return sum(self) != sum(other)
 
     def __gt__(self, other):
-        return sum(self.lst) > sum(other.lst)
+        return sum(self) > sum(other)
 
     def __ge__(self, other):
-        return sum(self.lst) >= sum(other.lst)
+        return sum(self) >= sum(other)
 
     def __lt__(self, other):
-        return sum(self.lst) < sum(other.lst)
+        return sum(self) < sum(other)
 
     def __le__(self, other):
-        return sum(self.lst) <= sum(other.lst)
+        return sum(self) <= sum(other)
 
     def __str__(self):
-        return f'Элементы: {self.lst}, sum = {sum(self.lst)}'
+        return f'Элементы: {super().__str__()}, sum = {sum(self)}'

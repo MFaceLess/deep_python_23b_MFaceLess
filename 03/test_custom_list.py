@@ -12,12 +12,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 + obj2
 
-        self.assertEqual(res.lst, [6, 3, 10, 7])
+        self.assertEqual(res, [6, 3, 10, 7])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [5, 1, 3, 7])
-        self.assertEqual(lst2, [1, 2, 7])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [5, 1, 3, 7])
+        self.assertEqual(obj2, [1, 2, 7])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [6, 3, 10, 7], sum = 26')
 
     def test_sum_obj_and_list(self):
         lst1 = [1]
@@ -26,12 +26,12 @@ class TestCustomList(unittest.TestCase):
         obj = CustomList(lst1)
         res = obj + lst2
 
-        self.assertEqual(res.lst, [3, 5])
+        self.assertEqual(res, [3, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [1])
+        self.assertEqual(obj, [1])
         self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [3, 5], sum = 8')
 
     def test_sum_list_and_obj(self):
         lst1 = [1]
@@ -40,12 +40,12 @@ class TestCustomList(unittest.TestCase):
         obj = CustomList(lst1)
         res = lst2 + obj
 
-        self.assertEqual(res.lst, [3, 5])
+        self.assertEqual(res, [3, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [1])
+        self.assertEqual(obj, [1])
         self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [3, 5], sum = 8')
 
     def test_sum_obj_len0(self):
         lst1 = []
@@ -56,12 +56,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 + obj2
 
-        self.assertEqual(res.lst, [2, 5])
+        self.assertEqual(res, [2, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [])
-        self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [])
+        self.assertEqual(obj2, [2, 5])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [2, 5], sum = 7')
 
     def test_sum_objs_len0(self):
         lst1 = []
@@ -72,12 +72,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 + obj2
 
-        self.assertEqual(res.lst, [])
+        self.assertEqual(res, [])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [])
-        self.assertEqual(lst2, [])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [])
+        self.assertEqual(obj2, [])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [], sum = 0')
 
     def test_sum_lst_len0(self):
         lst1 = [2, 5]
@@ -87,12 +87,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj + lst2
 
-        self.assertEqual(res.lst, [2, 5])
+        self.assertEqual(res, [2, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [2, 5])
+        self.assertEqual(obj, [2, 5])
         self.assertEqual(lst2, [])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [2, 5], sum = 7')
 
     def test_sum_exception(self):
         lst1 = [2, 5]
@@ -105,6 +105,7 @@ class TestCustomList(unittest.TestCase):
 
         self.assertEqual("Неподходящий тип", str(err.exception))
         self.assertEqual(TypeError, type(err.exception))
+        self.assertEqual(obj, [2, 5])
 
     def test_sub_exception(self):
         lst1 = [2, 5]
@@ -117,6 +118,7 @@ class TestCustomList(unittest.TestCase):
 
         self.assertEqual("Неподходящий тип", str(err.exception))
         self.assertEqual(TypeError, type(err.exception))
+        self.assertEqual(obj, [2, 5])
 
     def test_sub_two_obj(self):
         lst1 = [5, 1, 3, 7]
@@ -127,12 +129,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 - obj2
 
-        self.assertEqual(res.lst, [4, -1, -4, 7])
+        self.assertEqual(res, [4, -1, -4, 7])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [5, 1, 3, 7])
-        self.assertEqual(lst2, [1, 2, 7])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [5, 1, 3, 7])
+        self.assertEqual(obj2, [1, 2, 7])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [4, -1, -4, 7], sum = 6')
 
     def test_sub_obj_and_list(self):
         lst1 = [1]
@@ -141,12 +143,12 @@ class TestCustomList(unittest.TestCase):
         obj = CustomList(lst1)
         res = obj - lst2
 
-        self.assertEqual(res.lst, [-1, -5])
+        self.assertEqual(res, [-1, -5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [1])
+        self.assertEqual(obj, [1])
         self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [-1, -5], sum = -6')
 
     def test_sub_list_and_obj(self):
         lst1 = [1]
@@ -155,12 +157,12 @@ class TestCustomList(unittest.TestCase):
         obj = CustomList(lst1)
         res = lst2 - obj
 
-        self.assertEqual(res.lst, [1, 5])
+        self.assertEqual(res, [1, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [1])
+        self.assertEqual(obj, [1])
         self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [1, 5], sum = 6')
 
     def test_sub_obj_len0(self):
         lst1 = []
@@ -171,12 +173,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 - obj2
 
-        self.assertEqual(res.lst, [-2, -5])
+        self.assertEqual(res, [-2, -5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [])
-        self.assertEqual(lst2, [2, 5])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [])
+        self.assertEqual(obj2, [2, 5])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [-2, -5], sum = -7')
 
     def test_sub_objs_len0(self):
         lst1 = []
@@ -187,12 +189,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj1 - obj2
 
-        self.assertEqual(res.lst, [])
+        self.assertEqual(res, [])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [])
-        self.assertEqual(lst2, [])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(obj1, [])
+        self.assertEqual(obj2, [])
+        self.assertEqual(res.__str__(),
+                         'Элементы: [], sum = 0')
 
     def test_sub_lst_len0(self):
         lst1 = [2, 5]
@@ -202,12 +204,12 @@ class TestCustomList(unittest.TestCase):
 
         res = obj - lst2
 
-        self.assertEqual(res.lst, [2, 5])
+        self.assertEqual(res, [2, 5])
         self.assertTrue(isinstance(res, CustomList))
-        self.assertEqual(lst1, [2, 5])
+        self.assertEqual(obj, [2, 5])
         self.assertEqual(lst2, [])
-        self.assertEqual(CustomList.__str__(res),
-                         f'Элементы: {res.lst}, sum = {sum(res.lst)}')
+        self.assertEqual(res.__str__(),
+                         'Элементы: [2, 5], sum = 7')
 
     def test_eq(self):
         self.assertTrue(CustomList([1, 1, 1]) == CustomList([3]))
