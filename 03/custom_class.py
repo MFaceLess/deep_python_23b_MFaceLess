@@ -17,9 +17,6 @@ class CustomList(list):
             res += [-elem for elem in lst2[len(res):]]
         return CustomList(res)
 
-    def __init__(self, init_lst):
-        super().__init__(init_lst)
-
     def __add__(self, other):
         if not isinstance(other, (CustomList, list)):
             raise TypeError("Неподходящий тип")
@@ -56,3 +53,11 @@ class CustomList(list):
 
     def __str__(self):
         return f'Элементы: {super().__str__()}, sum = {sum(self)}'
+
+    def compare_two_lists(self, other):
+        if len(self) != len(other):
+            return False
+        for i in range(len(self)):
+            if self[i] != other[i]:
+                return False
+        return True
