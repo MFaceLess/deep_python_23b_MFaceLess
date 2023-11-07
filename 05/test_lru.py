@@ -52,6 +52,30 @@ class TestCustomList(unittest.TestCase):
         self.assertEqual(cache.get("k7"), "val7")
         self.assertEqual(cache.get("k4"), "val4")
 
+    def test_lru_cap_one(self):
+        cache = LRUCache(1)
+        cache.set("k1", "val1")
+        self.assertEqual(cache.get("k1"), "val1")
+        cache.set("k2", "val2")
+        self.assertEqual(cache.get("k2"), "val2")
+        self.assertIsNone(cache.get("k5"))
+        cache.set("k5", "val5")
+        self.assertIsNone(cache.get("k1"))
+        self.assertIsNone(cache.get("k2"))
+        self.assertEqual(cache.get("k5"), "val5")
+
+    def test_order_of_repression(self):
+        cache = LRUCache(2)
+        cache.set("k1", "val1")
+        cache.set("k2", "val2")
+        self.assertEqual(cache.get("k1"), "val1")
+        self.assertEqual(cache.get("k2"), "val2")
+        cache.set("k1", "change")
+        cache.set("k5", "val5")
+        self.assertEqual(cache.get("k1"), "change")
+        self.assertEqual(cache.get("k5"), "val5")
+        self.assertIsNone(cache.get("k2"))
+
 
 if __name__ == '__main__':
     unittest.main()
